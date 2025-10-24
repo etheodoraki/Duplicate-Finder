@@ -2,7 +2,9 @@ package com.example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.example.utils.StreamUtils;
 
@@ -18,8 +20,11 @@ public class App {
      * @param args Command-line arguments.
      */
     public static void main(String[] args) {
-
-        /* initialize the flags and the input data */
+        if (args.length == 0) {
+            System.out.println("No command-line arguments detected. Reading from standard input...");
+            readFromStdIn();
+            System.exit(0);
+        }
         boolean helpFlag = false;
         boolean defaultFlag = false;
         List<String> inData = new ArrayList<>();
@@ -45,7 +50,7 @@ public class App {
          * if no arguments or the help argument was provided,
          * then ignore any other arguments, display the help message and exit
          */
-        if (args.length == 0 || helpFlag) {
+        if (helpFlag) {
             displayHelpMessage();
             System.exit(0);
         }
@@ -109,5 +114,17 @@ public class App {
         List<String> duplicates = StreamUtils.findDuplicates(inputStream
                 .stream()).collect(Collectors.toList());
         System.out.println(duplicates);
+    }
+
+    private static void readFromStdIn() {
+        try (Scanner sc = new Scanner(System.in)) {
+            /* Get the input stream from the standard input */
+            Stream<String> inputStream = sc.tokens();
+            /* Use findDuplicates directly on the stream */
+            Stream<String> duplicates = StreamUtils.findDuplicates(inputStream);
+            /* Print the duplicates, assuming they fit in memory - if not, comment this out */
+            System.out.println("Detected duplicates: ");
+            System.out.println(duplicates.collect(Collectors.toList()));
+        } 
     }
 }
