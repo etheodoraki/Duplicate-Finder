@@ -1,11 +1,7 @@
-# Stage 2 - Duplicate Finder
+# Duplicate Finder
 
 A simple Java library and command-line application to detect duplicate elements in a stream.
 The application is designed to handle both small and potentially very large (unbounded) streams while preserving the first-appearance order of the duplicates.
-
-This project was developed to fulfill an exercise with two stages:
-1.  **Stage 1:** Handle streams that fit entirely in memory.
-2.  **Stage 2:** Handle unbounded streams in a memory-constrained environment  
 
 ## Library: `StreamUtils`
 
@@ -21,7 +17,7 @@ Given a `Stream` of objects, this method returns a new `Stream` that contains on
 
 ## Approach
 
-To satisfy the strict memory constraints of Stage 2, where both the total number of items (`N`) and the number of unique items (`U`) can be too large to fit in memory,this project implements a two-pass, on-disk algorithm.
+To satisfy strict memory constraints, where both the total number of items (`N`) and the number of unique items (`U`) can be too large to fit in memory,this project implements a two-pass, on-disk algorithm.
 
 This approach uses temporary files as external storage, leveraging the `<T extends Serializable>` constraint to handle data that exceeds available RAM.
 
